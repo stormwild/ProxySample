@@ -17,9 +17,9 @@ namespace ProxyConsole
             
             _log.Info("Log4Net working");
             
-            Console.WriteLine("***\r\nBegin program - no logging\r\n");
+            _log.Info("***\r\nBegin program - with logging\r\n");
             
-            IRepository<Customer> customerRepository = new Repository<Customer>();
+            IRepository<Customer> customerRepository = new LoggerRepository<Customer>(new Repository<Customer>(), _log);
 
             var customer = new Customer
             {
@@ -32,8 +32,7 @@ namespace ProxyConsole
             customerRepository.Update(customer);
             customerRepository.Delete(customer);
             
-            Console.WriteLine("\r\nEnd program - no logging\r\n***");
-            Console.ReadLine();
+            _log.Info("\r\nEnd program - with logging\r\n***");
         }
     }
 }

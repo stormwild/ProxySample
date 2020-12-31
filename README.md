@@ -68,6 +68,16 @@ namespace ProxyConsole
 }
 ```
 
+## xUnit
+
+[Capturing Output](https://xunit.net/docs/capturing-output)
+
 ## References
 
 - [Aspect-Oriented Programming : Aspect-Oriented Programming with the RealProxy Class](https://docs.microsoft.com/en-us/archive/msdn-magazine/2014/february/aspect-oriented-programming-aspect-oriented-programming-with-the-realproxy-class)
+- [Aspect Oriented Programming (AOP) in real life scenario.](https://dev.to/rafalpienkowski/aspect-oriented-programming-aop-in-real-life-scenario-3ha)
+- [.NET implements AOP through Autofac and DynamicProxy](https://www.programmersought.com/article/51715520249/)
+- [Using type interceptors with Autofac](https://maartenderaedemaeker.be/2017/07/23/using-type-interceptors-with-autofac/)
+- [Using Autofac's Aspect Oriented Programming for instrumentation in a class factory situation.](https://github.com/harlannorth/AOPLogging)
+- [AOP with Autofac and DynamicProxy2](https://nblumhardt.com/archives/aop-with-autofac-and-dynamicproxy2/)
+- [AOP in .NET Core using Autofac and DynamicProxy](https://ardall.wordpress.com/2019/04/11/aop-in-net-core-using-autofac-and-dynamicproxy/)
