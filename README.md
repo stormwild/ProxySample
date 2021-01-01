@@ -72,6 +72,98 @@ namespace ProxyConsole
 
 [Capturing Output](https://xunit.net/docs/capturing-output)
 
+## .NET Core
+
+[RealProxy in dotnet core?](https://stackoverflow.com/questions/38467753/realproxy-in-dotnet-core)
+
+> [It looks like RealProxy won't come to .NET Core/Standard](https://github.com/dotnet/corefx/issues/4091). In the issue, a Microsoft developer suggests [DispatchProxy](https://github.com/dotnet/corefx/tree/master/src/System.Reflection.DispatchProxy) as an alternative.
+> 
+> An alternative is the DispatchProxy, which has a wonderful example here: http://www.c-sharpcorner.com/article/aspect-oriented-programming-in-c-sharp-using-dispatchproxy/.
+> 
+> If we simplify the code, this is what we get:
+
+> ```csharp
+> public class LoggingDecorator<T> : DispatchProxy
+> {
+>     private T _decorated;
+> 
+>     protected override object Invoke(MethodInfo targetMethod, object[] args)
+>     {
+>         try
+>         {
+>             LogBefore(targetMethod, args);
+> 
+>             var result = targetMethod.Invoke(_decorated, args);
+> 
+>             LogAfter(targetMethod, args, result);
+>             return result;
+>         }
+>         catch (Exception ex) when (ex is TargetInvocationException)
+>         {
+>             LogException(ex.InnerException ?? ex, targetMethod);
+>             throw ex.InnerException ?? ex;
+>         }
+>     }
+> 
+>     public static T Create(T decorated)
+>     {
+>         object proxy = Create<T, LoggingDecorator<T>>();
+>         ((LoggingDecorator<T>)proxy).SetParameters(decorated);
+> 
+>         return (T)proxy;
+>     }
+> 
+>     private void SetParameters(T decorated)
+>     {
+>         if (decorated == null)
+>         {
+>             throw new ArgumentNullException(nameof(decorated));
+>         }
+>         _decorated = decorated;
+>     }
+> 
+>     private void LogException(Exception exception, MethodInfo methodInfo = null)
+>     {
+>         Console.WriteLine($"Class {_decorated.GetType().FullName}, Method > {methodInfo.Name} threw exception:\n{exception}");
+>     }
+> 
+>     private void LogAfter(MethodInfo methodInfo, object[] args, object result)
+>     {
+>         Console.WriteLine($"Class {_decorated.GetType().FullName}, Method > {methodInfo.Name} executed, Output: {result}");
+>     }
+> 
+>     private void LogBefore(MethodInfo methodInfo, object[] args)
+>     {
+>         Console.WriteLine($"Class {_decorated.GetType().FullName}, Method > {methodInfo.Name} is executing");
+>     }
+> }
+> ```
+> 
+> So if we have an example class Calculator with a corresponding interface (not shown here):
+> 
+> ```csharp
+> public class Calculator : ICalculator
+> {
+>     public int Add(int a, int b)
+>     {
+>         return a + b;
+>     }
+> }
+> ```
+> 
+> we can simply use it like this
+> 
+> ```csharp
+> static void Main(string[] args)
+> {
+>     var decoratedCalculator = LoggingDecorator<ICalculator>.Create(new  Calculator>());
+>     decoratedCalculator.Add(3, 5);
+>     Console.ReadKey();
+> }
+> ```
+
+
+
 ## References
 
 - [Aspect-Oriented Programming : Aspect-Oriented Programming with the RealProxy Class](https://docs.microsoft.com/en-us/archive/msdn-magazine/2014/february/aspect-oriented-programming-aspect-oriented-programming-with-the-realproxy-class)
@@ -81,3 +173,7 @@ namespace ProxyConsole
 - [Using Autofac's Aspect Oriented Programming for instrumentation in a class factory situation.](https://github.com/harlannorth/AOPLogging)
 - [AOP with Autofac and DynamicProxy2](https://nblumhardt.com/archives/aop-with-autofac-and-dynamicproxy2/)
 - [AOP in .NET Core using Autofac and DynamicProxy](https://ardall.wordpress.com/2019/04/11/aop-in-net-core-using-autofac-and-dynamicproxy/)
+- [Using DI with DispatchProxy based decorators in C# .NET Core](https://medium.com/@nik96a/using-di-with-dispatchproxy-based-decorators-in-c-net-core-ac02f02c5fe5)
+- [Decorators in .NET Core with Dependency Injection](https://greatrexpectations.com/2018/10/25/decorators-in-net-core-with-dependency-injection)
+- [Aspect Oriented Programming In C# With RealProxy class](https://www.c-sharpcorner.com/article/aspect-oriented-programming-in-c-sharp-with-realproxy/)
+- [Using RealProxy for Logging](https://kaylaniam.wordpress.com/2015/01/10/using-realproxy-for-logging/)
