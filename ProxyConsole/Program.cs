@@ -33,6 +33,8 @@ namespace ProxyConsole
             customerRepository.Delete(customer);
             
             _log.Info("\r\nEnd program - with logging\r\n***");
+
+            Console.Read();
         }
     }
 }
