@@ -166,6 +166,8 @@ namespace ProxyConsole
 
 ## References
 
+- [“Implementing” a non-public interface in .NET Core with DispatchProxy](https://www.strathweb.com/2019/09/implementing-a-non-public-interface-in-net-core-with-dispatchproxy/)
+- [Aspect Oriented Programming In C# Using DispatchProxy](https://www.c-sharpcorner.com/article/aspect-oriented-programming-in-c-sharp-using-dispatchproxy/)
 - [Aspect-Oriented Programming : Aspect-Oriented Programming with the RealProxy Class](https://docs.microsoft.com/en-us/archive/msdn-magazine/2014/february/aspect-oriented-programming-aspect-oriented-programming-with-the-realproxy-class)
 - [Aspect Oriented Programming (AOP) in real life scenario.](https://dev.to/rafalpienkowski/aspect-oriented-programming-aop-in-real-life-scenario-3ha)
 - [.NET implements AOP through Autofac and DynamicProxy](https://www.programmersought.com/article/51715520249/)
@@ -177,3 +179,5 @@ namespace ProxyConsole
 - [Decorators in .NET Core with Dependency Injection](https://greatrexpectations.com/2018/10/25/decorators-in-net-core-with-dependency-injection)
 - [Aspect Oriented Programming In C# With RealProxy class](https://www.c-sharpcorner.com/article/aspect-oriented-programming-in-c-sharp-with-realproxy/)
 - [Using RealProxy for Logging](https://kaylaniam.wordpress.com/2015/01/10/using-realproxy-for-logging/)
+- [RealProxy in dotnet core?](https://stackoverflow.com/questions/38467753/realproxy-in-dotnet-core/48150664)
+- [An example usage of DispatchProxy-based decorators with Microsoft.Extensions.DependencyInjection](https://github.com/NikitaChizhov/DispatchProxyWithDependencyInjection)
